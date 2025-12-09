@@ -1,10 +1,17 @@
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 
+import Navbar from "./components/Navbar";
+
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
-  return <div>new App using tailwindcss</div>;
+  return (
+    <main>
+      <Navbar />
+    </main>
+  )
 };
 
 export default App;
+ 
