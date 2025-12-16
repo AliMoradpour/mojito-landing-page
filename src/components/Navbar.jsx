@@ -1,21 +1,20 @@
-import { useGSAP } from "@gsap/react";
-import { navLinks } from "../../constants/index";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-export default function Navbar() {
+import { navLinks } from "../../constants/index.js";
+
+const Navbar = () => {
   useGSAP(() => {
     const navTween = gsap.timeline({
       scrollTrigger: {
-        trigger: ".nav",
+        trigger: "nav",
         start: "bottom top",
       },
     });
 
     navTween.fromTo(
       "nav",
-      {
-        backgroundColor: "transparent",
-      },
+      { backgroundColor: "transparent" },
       {
         backgroundColor: "#00000050",
         backgroundFilter: "blur(10px)",
@@ -23,7 +22,7 @@ export default function Navbar() {
         ease: "power1.inOut",
       }
     );
-  }, []);
+  });
 
   return (
     <nav>
@@ -43,4 +42,5 @@ export default function Navbar() {
       </div>
     </nav>
   );
-}
+};
+export default Navbar;
