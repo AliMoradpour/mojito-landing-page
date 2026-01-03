@@ -1,24 +1,57 @@
 "use client";
 
+import { allCocktails } from "../../constants/index.js";
 import { useRef, useState } from "react";
-import { allCocktails } from "../../constants/index";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Menu = () => {
   const contentRef = useRef();
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const totolCocktails = allCocktails.length;
+  useGSAP(() => {
+    gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 1 });
+    gsap.fromTo(
+      ".cocktail img",
+      { opacity: 0, xPercent: -100 },
+      {
+        xPercent: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power1.inOut",
+      }
+    );
+    gsap.fromTo(
+      ".details h2",
+      { yPercent: 100, opacity: 0 },
+      {
+        yPercent: 0,
+        opacity: 100,
+        ease: "power1.inOut",
+      }
+    );
+    gsap.fromTo(
+      ".details p",
+      { yPercent: 100, opacity: 0 },
+      {
+        yPercent: 0,
+        opacity: 100,
+        ease: "power1.inOut",
+      }
+    );
+  }, [currentIndex]);
+
+  const totalCocktails = allCocktails.length;
 
   const goToSlide = (index) => {
-    const newIndex = (index + totolCocktails) % totolCocktails;
+    const newIndex = (index + totalCocktails) % totalCocktails;
 
     setCurrentIndex(newIndex);
   };
 
   const getCocktailAt = (indexOffset) => {
     return allCocktails[
-      (currentIndex + indexOffset + totolCocktails) % totolCocktails
+      (currentIndex + indexOffset + totalCocktails) % totalCocktails
     ];
   };
 
@@ -50,11 +83,9 @@ const Menu = () => {
           return (
             <button
               key={cocktail.id}
-              className={`${
-                isActive
-                  ? "text-white border-white"
-                  : "text-white/50 border-white/50"
-              }`}
+              className={`
+				${isActive ? "text-white border-white" : "text-white/50 border-white/50"}
+			 `}
               onClick={() => goToSlide(index)}
             >
               {cocktail.name}
@@ -72,30 +103,31 @@ const Menu = () => {
             <span>{prevCocktail.name}</span>
             <img
               src="/images/right-arrow.png"
-              alt="right arrow"
+              alt="right-arrow"
               aria-hidden="true"
             />
           </button>
+
           <button
-            className="text-right"
+            className="text-left"
             onClick={() => goToSlide(currentIndex + 1)}
           >
             <span>{nextCocktail.name}</span>
             <img
               src="/images/left-arrow.png"
-              alt="left arrow"
+              alt="left-arrow"
               aria-hidden="true"
             />
           </button>
         </div>
 
         <div className="cocktail">
-          <img src={currentCocktail.image} className="object-contain" alt="" />
+          <img src={currentCocktail.image} className="object-contain" />
         </div>
 
         <div className="recipe">
           <div ref={contentRef} className="info">
-            <p>Recipe for: </p>
+            <p>Recipe for:</p>
             <p id="title">{currentCocktail.name}</p>
           </div>
 
@@ -108,5 +140,4 @@ const Menu = () => {
     </section>
   );
 };
-
 export default Menu;

@@ -18,6 +18,7 @@ const Hero = () => {
       type: "lines",
     });
 
+    // Apply text-gradient class once before animating
     heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
 
     gsap.from(heroSplit.chars, {
@@ -86,6 +87,8 @@ const Hero = () => {
         />
 
         <div className="body">
+          {/* <img src="/images/arrow.png" alt="arrow" className="arrow" /> */}
+
           <div className="content">
             <div className="space-y-5 hidden md:block">
               <p>Cool. Crisp. Classic.</p>
